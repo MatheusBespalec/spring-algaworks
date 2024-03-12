@@ -27,4 +27,9 @@ public class KitchenDAO {
     public Kitchen persist(Kitchen kitchen) {
         return entityManager.merge(kitchen);
     }
+
+    @Transactional
+    public void destroy(Kitchen kitchen) {
+        entityManager.remove(this.getById(kitchen.getId()));
+    }
 }
