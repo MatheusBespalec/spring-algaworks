@@ -14,6 +14,9 @@ public class KitchenDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public Kitchen getById(Long id) {
+        return entityManager.find(Kitchen.class, id);
+    }
 
     public List<Kitchen> getAll() {
         TypedQuery<Kitchen> typedQuery = entityManager.createQuery("from Kitchen", Kitchen.class);

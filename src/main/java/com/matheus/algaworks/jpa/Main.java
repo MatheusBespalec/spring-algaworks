@@ -13,6 +13,7 @@ public class Main {
                 .run(args);
         KitchenDAO kitchenDAO = applicationContext.getBean(KitchenDAO.class);
 
-        System.out.println(kitchenDAO.persist(new Kitchen("Chinesa")));
+        Kitchen kitchen = kitchenDAO.getById(1L);
+        System.out.println(kitchen.getName());
     }
 }
