@@ -1,4 +1,4 @@
-package com.matheus.algaworks.jpa.jpa;
+package com.matheus.algaworks.jpa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

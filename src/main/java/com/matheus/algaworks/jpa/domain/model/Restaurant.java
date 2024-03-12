@@ -1,4 +1,4 @@
-package com.matheus.algaworks.jpa.jpa.domain.model;
+package com.matheus.algaworks.jpa.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

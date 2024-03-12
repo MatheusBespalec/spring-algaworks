@@ -1,0 +1,1 @@
+insert into kitchen (name) values ("Tailandesa"), ("Brasileira"), ("Japonesa"), ("Italizana")
