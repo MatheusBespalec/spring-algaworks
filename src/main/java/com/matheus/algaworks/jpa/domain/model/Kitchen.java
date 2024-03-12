@@ -9,6 +9,12 @@ public class Kitchen {
     private Long id;
     private String name;
 
+    public Kitchen () { }
+
+    public Kitchen (String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

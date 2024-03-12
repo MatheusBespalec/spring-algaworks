@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,8 +14,14 @@ public class KitchenDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     public List<Kitchen> getAll() {
         TypedQuery<Kitchen> typedQuery = entityManager.createQuery("from Kitchen", Kitchen.class);
         return typedQuery.getResultList();
+    }
+
+    @Transactional
+    public Kitchen persist(Kitchen kitchen) {
+        return entityManager.merge(kitchen);
     }
 }
