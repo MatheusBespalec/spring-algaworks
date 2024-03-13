@@ -1,6 +1,7 @@
-package com.matheus.algaworks.jpa.dao;
+package com.matheus.algaworks.jpa.infrastructure.repository;
 
 import com.matheus.algaworks.jpa.domain.model.Kitchen;
+import com.matheus.algaworks.jpa.domain.repository.KitchenRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -10,11 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class KitchenDAO {
+public class KitchenRepositoryJpa implements KitchenRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Kitchen getById(Long id) {
+    @Override
+    public Kitchen findById(Long id) {
         return entityManager.find(Kitchen.class, id);
     }
 
@@ -24,12 +26,14 @@ public class KitchenDAO {
     }
 
     @Transactional
-    public Kitchen persist(Kitchen kitchen) {
+    @Override
+    public Kitchen save(Kitchen kitchen) {
         return entityManager.merge(kitchen);
     }
 
     @Transactional
-    public void destroy(Kitchen kitchen) {
-        entityManager.remove(this.getById(kitchen.getId()));
+    @Override
+    public void remove(Kitchen kitchen) {
+        entityManager.remove(this.findById(kitchen.getId()));
     }
 }

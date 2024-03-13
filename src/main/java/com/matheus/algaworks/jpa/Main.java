@@ -1,7 +1,7 @@
 package com.matheus.algaworks.jpa;
 
-import com.matheus.algaworks.jpa.dao.KitchenDAO;
 import com.matheus.algaworks.jpa.domain.model.Kitchen;
+import com.matheus.algaworks.jpa.domain.repository.KitchenRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -11,10 +11,10 @@ public class Main {
         ApplicationContext applicationContext = new SpringApplicationBuilder(JpaApplication.class)
                 .web(WebApplicationType.NONE)
                 .run(args);
-        KitchenDAO kitchenDAO = applicationContext.getBean(KitchenDAO.class);
+        KitchenRepository kitchenRepository = applicationContext.getBean(KitchenRepository.class);
 
         Kitchen kitchen = new Kitchen();
         kitchen.setId(1L);
-        kitchenDAO.destroy(kitchen);
+        kitchenRepository.remove(kitchen);
     }
 }
