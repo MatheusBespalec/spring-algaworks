@@ -1,8 +1,6 @@
 package com.matheus.algaworks.jpa;
 
-import com.matheus.algaworks.jpa.domain.model.Kitchen;
 import com.matheus.algaworks.jpa.domain.model.Restaurant;
-import com.matheus.algaworks.jpa.domain.repository.KitchenRepository;
 import com.matheus.algaworks.jpa.domain.repository.RestaurantRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
