@@ -4,6 +4,7 @@ import com.matheus.algaworks.delivery.domain.model.Kitchen;
 import com.matheus.algaworks.delivery.domain.repository.KitchenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,5 +19,10 @@ public class KitchenController {
     @GetMapping
     public List<Kitchen> list() {
         return this.kitchenRepository.getAll();
+    }
+
+    @GetMapping("/{kitchenId}")
+    public Kitchen find(@PathVariable Long kitchenId) {
+        return this.kitchenRepository.findById(kitchenId);
     }
 }
