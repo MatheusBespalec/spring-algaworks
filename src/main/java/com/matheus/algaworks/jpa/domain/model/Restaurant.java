@@ -1,9 +1,6 @@
 package com.matheus.algaworks.jpa.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,4 +16,6 @@ public class Restaurant {
     private Long id;
     private String name;
     private BigDecimal freightRate;
+    @ManyToOne
+    private Kitchen kitchen;
 }
