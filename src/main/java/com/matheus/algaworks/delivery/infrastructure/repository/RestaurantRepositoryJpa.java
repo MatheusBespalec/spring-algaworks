@@ -1,7 +1,7 @@
-package com.matheus.algaworks.jpa.infrastructure.repository;
+package com.matheus.algaworks.delivery.infrastructure.repository;
 
-import com.matheus.algaworks.jpa.domain.model.Restaurant;
-import com.matheus.algaworks.jpa.domain.repository.RestaurantRepository;
+import com.matheus.algaworks.delivery.domain.model.Restaurant;
+import com.matheus.algaworks.delivery.domain.repository.RestaurantRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;

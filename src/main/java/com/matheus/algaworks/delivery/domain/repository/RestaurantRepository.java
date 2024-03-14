@@ -1,6 +1,6 @@
-package com.matheus.algaworks.jpa.domain.repository;
+package com.matheus.algaworks.delivery.domain.repository;
 
-import com.matheus.algaworks.jpa.domain.model.Restaurant;
+import com.matheus.algaworks.delivery.domain.model.Restaurant;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.matheus.algaworks.jpa.domain.repository;
+package com.matheus.algaworks.delivery.domain.repository;
 
-import com.matheus.algaworks.jpa.domain.model.Kitchen;
+import com.matheus.algaworks.delivery.domain.model.Kitchen;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package com.matheus.algaworks.jpa.infrastructure.repository;
+package com.matheus.algaworks.delivery.infrastructure.repository;
 
-import com.matheus.algaworks.jpa.domain.model.Kitchen;
-import com.matheus.algaworks.jpa.domain.repository.KitchenRepository;
+import com.matheus.algaworks.delivery.domain.model.Kitchen;
+import com.matheus.algaworks.delivery.domain.repository.KitchenRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;

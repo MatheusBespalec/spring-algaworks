@@ -1,19 +1,18 @@
-package com.matheus.algaworks.jpa.domain.model;
+package com.matheus.algaworks.delivery.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class PaymentType {
+@Entity
+public class State {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @GeneratedValue
     private Long id;
-    private String description;
+    private String name;
 }
