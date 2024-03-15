@@ -38,7 +38,7 @@ public class KitchenController {
 
     @PostMapping
     public ResponseEntity<Kitchen> save(@RequestBody Kitchen kitchen) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.kitchenRepository.save(kitchen));
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.kitchenService.save(kitchen));
     }
 
     @PutMapping("/{kitchenId}")
@@ -48,7 +48,7 @@ public class KitchenController {
             return ResponseEntity.notFound().build();
         }
         BeanUtils.copyProperties(kitchen, persistedKitchen, "id");
-        return ResponseEntity.ok(this.kitchenRepository.save(persistedKitchen));
+        return ResponseEntity.ok(this.kitchenService.save(persistedKitchen));
     }
 
     @DeleteMapping("/{kitchenId}")
