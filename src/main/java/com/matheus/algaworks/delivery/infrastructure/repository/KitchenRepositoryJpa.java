@@ -5,6 +5,7 @@ import com.matheus.algaworks.delivery.domain.repository.KitchenRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,12 @@ public class KitchenRepositoryJpa implements KitchenRepository {
 
     @Transactional
     @Override
-    public void remove(Kitchen kitchen) {
-        entityManager.remove(this.findById(kitchen.getId()));
+    public void remove(Long id) {
+        Kitchen kitchen = this.findById(id);
+
+        if (kitchen == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+        entityManager.remove(kitchen);
     }
 }

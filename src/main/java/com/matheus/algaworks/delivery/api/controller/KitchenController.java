@@ -1,7 +1,10 @@
 package com.matheus.algaworks.delivery.api.controller;
 
+import com.matheus.algaworks.delivery.domain.exeption.EntityInUseException;
+import com.matheus.algaworks.delivery.domain.exeption.EntityNotFoundException;
 import com.matheus.algaworks.delivery.domain.model.Kitchen;
 import com.matheus.algaworks.delivery.domain.repository.KitchenRepository;
+import com.matheus.algaworks.delivery.domain.service.KitchenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +19,7 @@ import java.util.List;
 @RequestMapping("/kitchens")
 public class KitchenController {
     private final KitchenRepository kitchenRepository;
+    private final KitchenService kitchenService;
 
     @GetMapping
     public ResponseEntity<List<Kitchen>> list() {
@@ -49,15 +53,13 @@ public class KitchenController {
 
     @DeleteMapping("/{kitchenId}")
     public ResponseEntity<Void> remove(@PathVariable Long kitchenId) {
-        Kitchen kitchen = this.kitchenRepository.findById(kitchenId);
-        if (kitchen == null) {
-            return ResponseEntity.notFound().build();
-        }
         try {
-            this.kitchenRepository.remove(kitchen);
+            this.kitchenService.delete(kitchenId);
             return ResponseEntity.noContent().build();
-        } catch (DataIntegrityViolationException e) {
+        } catch (EntityInUseException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
