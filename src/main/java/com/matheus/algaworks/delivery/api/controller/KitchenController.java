@@ -42,7 +42,7 @@ public class KitchenController {
     }
 
     @PutMapping("/{kitchenId}")
-    public ResponseEntity<Kitchen> save(@PathVariable Long kitchenId, @RequestBody Kitchen kitchen) {
+    public ResponseEntity<Kitchen> replace(@PathVariable Long kitchenId, @RequestBody Kitchen kitchen) {
         Kitchen persistedKitchen = this.kitchenRepository.findById(kitchenId);
         if (persistedKitchen == null) {
             return ResponseEntity.notFound().build();

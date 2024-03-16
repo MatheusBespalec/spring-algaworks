@@ -1,8 +1,8 @@
 package com.matheus.algaworks.delivery.infrastructure.repository;
 
 import com.matheus.algaworks.delivery.domain.exeption.EntityNotFoundException;
-import com.matheus.algaworks.delivery.domain.model.State;
-import com.matheus.algaworks.delivery.domain.repository.StateRepository;
+import com.matheus.algaworks.delivery.domain.model.City;
+import com.matheus.algaworks.delivery.domain.repository.CityRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
@@ -11,33 +11,33 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class StateRepositoryJpa implements StateRepository {
+public class CityRepositoryJpa implements CityRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<State> getAll() {
-        return this.entityManager.createQuery("from State", State.class).getResultList();
+    public List<City> getAll() {
+        return this.entityManager.createQuery("from City", City.class).getResultList();
     }
 
     @Override
-    public State findById(Long id) {
-        return this.entityManager.find(State.class, id);
+    public City findById(Long id) {
+        return this.entityManager.find(City.class, id);
     }
 
     @Override
     @Transactional
-    public State save(State state) {
-        return this.entityManager.merge(state);
+    public City save(City city) {
+        return this.entityManager.merge(city);
     }
 
     @Override
     @Transactional
     public void remove(Long id) {
-        State state = this.findById(id);
-        if (state == null) {
+        City city = this.findById(id);
+        if (city == null) {
             throw new EntityNotFoundException();
         }
-        this.entityManager.remove(state);
+        this.entityManager.remove(city);
     }
 }

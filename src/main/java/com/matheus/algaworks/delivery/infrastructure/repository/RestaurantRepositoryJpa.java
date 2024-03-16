@@ -3,6 +3,7 @@ package com.matheus.algaworks.delivery.infrastructure.repository;
 import com.matheus.algaworks.delivery.domain.model.Restaurant;
 import com.matheus.algaworks.delivery.domain.repository.RestaurantRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,11 @@ public class RestaurantRepositoryJpa implements RestaurantRepository {
 
     @Override
     @Transactional
-    public void remove(Restaurant restaurant) {
-        this.entityManager.remove(this.findById(restaurant.getId()));
+    public void remove(Long id) {
+        Restaurant restaurant = this.findById(id);
+        if (restaurant == null) {
+            throw new EntityNotFoundException();
+        }
+        this.entityManager.remove(restaurant);
     }
 }
