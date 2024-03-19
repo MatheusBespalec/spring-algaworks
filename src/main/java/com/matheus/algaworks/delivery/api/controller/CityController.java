@@ -20,17 +20,14 @@ public class CityController {
 
     @GetMapping
     public ResponseEntity<List<City>> list() {
-        List<City> cities = this.cityRepository.getAll();
+        List<City> cities = this.cityRepository.findAll();
         return ResponseEntity.ok(cities);
     }
 
     @GetMapping("/{cityId}")
     public ResponseEntity<City> find(@PathVariable Long cityId) {
-        City city = this.cityRepository.findById(cityId);
-        if (city == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(city);
+        return this.cityRepository.findById(cityId)
+                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping

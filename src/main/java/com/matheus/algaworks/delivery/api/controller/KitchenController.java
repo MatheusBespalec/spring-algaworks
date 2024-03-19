@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,17 +24,13 @@ public class KitchenController {
 
     @GetMapping
     public ResponseEntity<List<Kitchen>> list() {
-        return ResponseEntity.ok(this.kitchenRepository.getAll());
+        return ResponseEntity.ok(this.kitchenRepository.findAll());
     }
 
     @GetMapping("/{kitchenId}")
     public ResponseEntity<Kitchen> find(@PathVariable Long kitchenId) {
-        Kitchen kitchen = this.kitchenRepository.findById(kitchenId);
-
-        if (kitchen == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(kitchen);
+        Optional<Kitchen> kitchen = this.kitchenRepository.findById(kitchenId);
+        return kitchen.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -43,10 +40,11 @@ public class KitchenController {
 
     @PutMapping("/{kitchenId}")
     public ResponseEntity<Kitchen> replace(@PathVariable Long kitchenId, @RequestBody Kitchen kitchen) {
-        Kitchen persistedKitchen = this.kitchenRepository.findById(kitchenId);
-        if (persistedKitchen == null) {
+        Optional<Kitchen> kitchenOptional = this.kitchenRepository.findById(kitchenId);
+        if (kitchenOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Kitchen persistedKitchen = kitchenOptional.get();
         BeanUtils.copyProperties(kitchen, persistedKitchen, "id");
         return ResponseEntity.ok(this.kitchenService.save(persistedKitchen));
     }

@@ -18,24 +18,22 @@ public class CityService {
     private final StateRepository stateRepository;
 
     public City save(City city) throws InvalidAttributeValueException {
-        State state = this.stateRepository.findById(city.getState().getId());
-        if (state == null) {
-            throw new InvalidAttributeValueException();
-        }
+        State state = this.stateRepository.findById(city.getState().getId()).orElseThrow(InvalidAttributeValueException::new);
         city.setState(state);
         return this.cityRepository.save(city);
     }
 
     public City replace(City city) throws InvalidAttributeValueException {
-        City persistedCity = this.cityRepository.findById(city.getId());
-        if (persistedCity == null) {
-            throw new EntityNotFoundException();
-        }
+        City persistedCity = this.cityRepository.findById(city.getId())
+                .orElseThrow(EntityNotFoundException::new);
         BeanUtils.copyProperties(city, persistedCity, "id");
         return this.save(persistedCity);
     }
 
     public void delete(Long cityId) {
-        this.cityRepository.remove(cityId);
+        if (!this.cityRepository.existsById(cityId)) {
+            throw new EntityNotFoundException();
+        }
+        this.cityRepository.deleteById(cityId);
     }
 }

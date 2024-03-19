@@ -15,6 +15,7 @@ import javax.management.InvalidAttributeValueException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,16 +27,13 @@ public class RestaurantController {
 
     @GetMapping
     public ResponseEntity<List<Restaurant>> list() {
-        return ResponseEntity.ok(this.restaurantRepository.getAll());
+        return ResponseEntity.ok(this.restaurantRepository.findAll());
     }
 
     @GetMapping("/{restaurantId}")
     public ResponseEntity<Restaurant> find(@PathVariable Long restaurantId) {
-        Restaurant restaurant = this.restaurantRepository.findById(restaurantId);
-        if (restaurant == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(restaurant);
+        Optional<Restaurant> restaurant = this.restaurantRepository.findById(restaurantId);
+        return restaurant.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -63,10 +61,11 @@ public class RestaurantController {
 
     @PatchMapping("{restaurantId}")
     public ResponseEntity<Restaurant> update(@PathVariable Long restaurantId, @RequestBody Map<String, Object> fields) {
-        Restaurant persistedRestaurant = this.restaurantRepository.findById(restaurantId);
-        if (persistedRestaurant == null) {
+        Optional<Restaurant> restaurantOptional = this.restaurantRepository.findById(restaurantId);
+        if (restaurantOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Restaurant persistedRestaurant = restaurantOptional.get();
 
         ObjectMapper objectMapper = new ObjectMapper();
         Restaurant restaurant = objectMapper.convertValue(fields, Restaurant.class);

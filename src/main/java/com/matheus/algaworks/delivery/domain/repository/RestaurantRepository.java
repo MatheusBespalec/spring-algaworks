@@ -1,13 +1,9 @@
 package com.matheus.algaworks.delivery.domain.repository;
 
 import com.matheus.algaworks.delivery.domain.model.Restaurant;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface RestaurantRepository {
-    List<Restaurant> getAll();
-    Restaurant findById(Long id);
-    Restaurant save(Restaurant restaurant);
-    void remove(Long id);
-
+@Repository
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 }

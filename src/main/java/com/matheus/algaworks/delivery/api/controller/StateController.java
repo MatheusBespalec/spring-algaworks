@@ -5,7 +5,8 @@ import com.matheus.algaworks.delivery.domain.model.State;
 import com.matheus.algaworks.delivery.domain.repository.StateRepository;
 import com.matheus.algaworks.delivery.domain.service.StateService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,17 +21,14 @@ public class StateController {
 
     @GetMapping
     public ResponseEntity<List<State>> list() {
-        List<State> states = this.stateRepository.getAll();
+        List<State> states = this.stateRepository.findAll();
         return ResponseEntity.ok(states);
     }
 
     @GetMapping("/{stateId}")
     public ResponseEntity<State> find(@PathVariable Long stateId) {
-        State state = this.stateRepository.findById(stateId);
-        if (state == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(state);
+        return this.stateRepository.findById(stateId)
+                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -57,6 +55,8 @@ public class StateController {
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 }

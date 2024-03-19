@@ -18,13 +18,15 @@ public class KitchenService {
         return this.kitchenRepository.save(kitchen);
     }
 
-    public void delete(Long id) {
+    public void delete(Long kitchenId) {
+        if (!this.kitchenRepository.existsById(kitchenId)) {
+            throw new EntityNotFoundException();
+        }
+
         try {
-            this.kitchenRepository.remove(id);
+            this.kitchenRepository.deleteById(kitchenId);
         } catch (DataIntegrityViolationException e) {
             throw new EntityInUseException();
-        } catch (EmptyResultDataAccessException e) {
-            throw new EntityNotFoundException();
         }
     }
 }

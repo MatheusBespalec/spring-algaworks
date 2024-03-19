@@ -17,15 +17,16 @@ public class StateService {
     }
 
     public State update(State state) {
-        State persistedState = this.stateRepository.findById(state.getId());
-        if (persistedState == null) {
-            throw new EntityNotFoundException();
-        }
+        State persistedState = this.stateRepository.findById(state.getId())
+                .orElseThrow(EntityNotFoundException::new);
         BeanUtils.copyProperties(state, persistedState, "id");
         return this.stateRepository.save(persistedState);
     }
 
     public void delete(Long stateId) {
-        this.stateRepository.remove(stateId);
+        if (!this.stateRepository.existsById(stateId)) {
+            throw new EntityNotFoundException();
+        }
+        this.stateRepository.deleteById(stateId);
     }
 }
