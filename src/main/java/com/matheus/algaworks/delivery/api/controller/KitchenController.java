@@ -33,6 +33,11 @@ public class KitchenController {
         return kitchen.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/test")
+    public ResponseEntity test(String name) {
+        return ResponseEntity.ok(this.kitchenRepository.findByName(name));
+    }
+
     @PostMapping
     public ResponseEntity<Kitchen> save(@RequestBody Kitchen kitchen) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.kitchenService.save(kitchen));

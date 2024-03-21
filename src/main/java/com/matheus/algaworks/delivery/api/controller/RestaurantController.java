@@ -88,4 +88,9 @@ public class RestaurantController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/test")
+    public ResponseEntity test(String name, Long kitchenId) {
+        return ResponseEntity.ok(this.restaurantRepository.customSearch(name, kitchenId));
+    }
 }
