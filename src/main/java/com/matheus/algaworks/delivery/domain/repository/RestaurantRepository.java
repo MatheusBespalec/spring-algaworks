@@ -6,11 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantRepositoryQueries {
 
-    @Query("from Restaurant where name like %:name% and kitchen.id = :kitchenId")
+//    @Query("from Restaurant where name like %:name% and kitchen.id = :kitchenId")
     Optional<Restaurant> customSearch(String name, @Param("kitchenId") Long kitchen);
+    List<Restaurant> customQuery(String name, BigDecimal minFreightRate, BigDecimal maxFreightRate);
 }

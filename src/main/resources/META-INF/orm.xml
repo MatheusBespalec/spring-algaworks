@@ -1,0 +1,7 @@
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" version="1.0">
+    <named-query name="Restaurant.customSearch">
+        <query>
+            from Restaurant where name like concat('%', :name, '%') and kitchen.id = :kitchenId
+        </query>
+    </named-query>
+</entity-mappings>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.InvalidAttributeValueException;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -90,7 +91,8 @@ public class RestaurantController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity test(String name, Long kitchenId) {
-        return ResponseEntity.ok(this.restaurantRepository.customSearch(name, kitchenId));
+    public ResponseEntity test(String name, BigDecimal minFreightRate, BigDecimal maxFreightRate) {
+        return ResponseEntity.ok(this.restaurantRepository.customQuery(name, minFreightRate, maxFreightRate));
+//        return ResponseEntity.ok(this.restaurantRepository.customSearch(name, kitchenId));
     }
 }
