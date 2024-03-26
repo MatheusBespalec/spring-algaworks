@@ -91,8 +91,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity test(String name) {
-        return ResponseEntity.ok(this.restaurantRepository.findFreeShipping(name));
-//        return ResponseEntity.ok(this.restaurantRepository.customSearch(name, kitchenId));
+    public ResponseEntity test() {
+        return ResponseEntity.ok(this.restaurantRepository.findFirst());
     }
 }
