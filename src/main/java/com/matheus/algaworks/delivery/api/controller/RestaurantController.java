@@ -5,6 +5,8 @@ import com.matheus.algaworks.delivery.domain.exeption.EntityNotFoundException;
 import com.matheus.algaworks.delivery.domain.model.Restaurant;
 import com.matheus.algaworks.delivery.domain.repository.RestaurantRepository;
 import com.matheus.algaworks.delivery.domain.service.RestaurantService;
+import com.matheus.algaworks.delivery.infrastructure.repository.spec.RestaurantFreeShippingSpec;
+import com.matheus.algaworks.delivery.infrastructure.repository.spec.RestaurantNameContains;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,8 +93,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity test(String name, BigDecimal minFreightRate, BigDecimal maxFreightRate) {
-        return ResponseEntity.ok(this.restaurantRepository.customQuery(name, minFreightRate, maxFreightRate));
+    public ResponseEntity test(String name) {
+        return ResponseEntity.ok(this.restaurantRepository.findAll(new RestaurantNameContains(name)
+                .and(new RestaurantFreeShippingSpec())));
 //        return ResponseEntity.ok(this.restaurantRepository.customSearch(name, kitchenId));
     }
 }
