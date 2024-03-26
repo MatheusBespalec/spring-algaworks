@@ -1,5 +1,6 @@
 package com.matheus.algaworks.delivery.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,5 +18,6 @@ public class Restaurant {
     private String name;
     private BigDecimal freightRate;
     @ManyToOne
+    @JsonIgnore
     private Kitchen kitchen;
 }
