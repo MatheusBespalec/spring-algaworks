@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RestaurantRepositoryQueries {
     List<Restaurant> customQuery(String name, BigDecimal minFreightRate, BigDecimal maxFreightRate);
+    List<Restaurant> findFreeShipping(String name);
 }

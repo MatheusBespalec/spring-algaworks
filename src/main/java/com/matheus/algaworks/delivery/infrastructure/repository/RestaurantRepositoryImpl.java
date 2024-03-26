@@ -1,7 +1,9 @@
 package com.matheus.algaworks.delivery.infrastructure.repository;
 
 import com.matheus.algaworks.delivery.domain.model.Restaurant;
+import com.matheus.algaworks.delivery.domain.repository.RestaurantRepository;
 import com.matheus.algaworks.delivery.domain.repository.RestaurantRepositoryQueries;
+import com.matheus.algaworks.delivery.infrastructure.repository.spec.RestaurantSpecs;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -9,6 +11,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -20,6 +25,12 @@ import java.util.List;
 public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
     @PersistenceContext
     private EntityManager entityManager;
+
+    private final RestaurantRepository restaurantRepository;
+
+    public RestaurantRepositoryImpl(@Lazy RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
+    }
     @Override
     public List<Restaurant> customQuery(String name, BigDecimal minFreightRate, BigDecimal maxFreightRate) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -45,5 +56,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
 
         TypedQuery<Restaurant> query = this.entityManager.createQuery(criteriaQuery);
         return query.getResultList();
+    }
+
+    @Override
+    public List<Restaurant> findFreeShipping(String name) {
+        return this.restaurantRepository.findAll(RestaurantSpecs.freeShipping()
+                .and(RestaurantSpecs.nameContains(name)));
     }
 }
