@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -15,9 +17,15 @@ public class Restaurant {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private BigDecimal freightRate;
+
     @ManyToOne
-    @JsonIgnore
     private Kitchen kitchen;
+
+    @ManyToMany
+    @JoinTable(inverseJoinColumns = @JoinColumn(name = "payment_type_id"))
+    private List<PaymentType> paymentTypes = new ArrayList<PaymentType>();
 }

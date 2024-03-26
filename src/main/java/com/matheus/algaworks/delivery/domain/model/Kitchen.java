@@ -1,5 +1,6 @@
 package com.matheus.algaworks.delivery.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,5 +20,6 @@ public class Kitchen {
     private String name;
 
     @OneToMany(mappedBy = "kitchen")
+    @JsonIgnore
     private List<Restaurant> restaurants = new ArrayList<Restaurant>();
 }
