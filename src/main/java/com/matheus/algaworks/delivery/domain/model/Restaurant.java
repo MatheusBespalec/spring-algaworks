@@ -28,4 +28,7 @@ public class Restaurant {
     @ManyToMany
     @JoinTable(inverseJoinColumns = @JoinColumn(name = "payment_type_id"))
     private List<PaymentType> paymentTypes = new ArrayList<PaymentType>();
+
+    @Embedded
+    private Address address;
 }
