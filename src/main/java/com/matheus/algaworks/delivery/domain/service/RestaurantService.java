@@ -1,9 +1,9 @@
 package com.matheus.algaworks.delivery.domain.service;
 
 import com.matheus.algaworks.delivery.domain.exeption.EntityNotFoundException;
-import com.matheus.algaworks.delivery.domain.model.Kitchen;
 import com.matheus.algaworks.delivery.domain.model.Restaurant;
-import com.matheus.algaworks.delivery.domain.repository.KitchenRepository;
+import com.matheus.algaworks.delivery.domain.model.RestaurantCategory;
+import com.matheus.algaworks.delivery.domain.repository.RestaurantCategoryRepository;
 import com.matheus.algaworks.delivery.domain.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -16,14 +16,14 @@ import java.util.Optional;
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
-    private final KitchenRepository kitchenRepository;
+    private final RestaurantCategoryRepository restaurantCategoryRepository;
     public Restaurant save(Restaurant restaurant) throws InvalidAttributeValueException {
-        Long kitchenId = restaurant.getKitchen().getId();
-        Optional<Kitchen> kitchen = this.kitchenRepository.findById(kitchenId);
-        if (kitchen.isEmpty()) {
+        Long restaurantCategoryId = restaurant.getCategory().getId();
+        Optional<RestaurantCategory> restaurantCategory = this.restaurantCategoryRepository.findById(restaurantCategoryId);
+        if (restaurantCategory.isEmpty()) {
             throw new InvalidAttributeValueException();
         }
-        restaurant.setKitchen(kitchen.get());
+        restaurant.setCategory(restaurantCategory.get());
         return this.restaurantRepository.save(restaurant);
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Kitchen {
+public class RestaurantCategory {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Kitchen {
 
     private String name;
 
-    @OneToMany(mappedBy = "kitchen")
+    @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Restaurant> restaurants = new ArrayList<Restaurant>();
 }

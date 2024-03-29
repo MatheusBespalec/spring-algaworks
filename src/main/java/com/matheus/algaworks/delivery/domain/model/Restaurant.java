@@ -26,8 +26,9 @@ public class Restaurant {
     private BigDecimal freightRate;
 
     @ManyToOne
-    private Kitchen kitchen;
+    private RestaurantCategory category;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(inverseJoinColumns = @JoinColumn(name = "payment_type_id"))
     private List<PaymentType> paymentTypes = new ArrayList<PaymentType>();
@@ -42,6 +43,7 @@ public class Restaurant {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<Product>();
 }
