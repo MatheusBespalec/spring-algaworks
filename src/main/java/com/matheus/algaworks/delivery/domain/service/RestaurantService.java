@@ -31,7 +31,7 @@ public class RestaurantService {
         Restaurant persistedRestaurant = this.restaurantRepository.findById(restaurant.getId())
                 .orElseThrow(EntityNotFoundException::new);
 
-        BeanUtils.copyProperties(restaurant, persistedRestaurant, "id", "paymentTypes", "address");
+        BeanUtils.copyProperties(restaurant, persistedRestaurant, "id", "paymentTypes", "address", "createdAt");
         return this.save(persistedRestaurant);
     }
 }
