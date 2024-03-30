@@ -3,6 +3,10 @@ spring:
     url: jdbc:mysql://127.0.0.1/jpa?createDatabaseIfNotExist=true&connectionTimeZone=UTC
     username: root
     password: root
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 3
+      idle-timeout: 10000
   jpa:
     show-sql: true
     generate-ddl: true
