@@ -1,9 +1,6 @@
 package com.matheus.algaworks.delivery.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -24,7 +21,7 @@ public class Address {
     @Column(name = "address_neighborhood")
     private String neighborhood;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_city_id")
     private City city;
 }

@@ -33,7 +33,6 @@ public class Restaurant {
     @JoinTable(inverseJoinColumns = @JoinColumn(name = "payment_type_id"))
     private List<PaymentType> paymentTypes = new ArrayList<PaymentType>();
 
-    @JsonIgnore
     @Embedded
     private Address address;
 

@@ -22,46 +22,30 @@ public class RestaurantCategoryController {
     private final RestaurantCategoryService restaurantCategoryService;
 
     @GetMapping
-    public ResponseEntity<List<RestaurantCategory>> list() {
-        return ResponseEntity.ok(this.restaurantCategoryRepository.findAll());
+    public List<RestaurantCategory> list() {
+        return this.restaurantCategoryRepository.findAll();
     }
 
     @GetMapping("/{restaurantCategoryId}")
-    public ResponseEntity<RestaurantCategory> find(@PathVariable Long restaurantCategoryId) {
-        Optional<RestaurantCategory> restaurantCategory = this.restaurantCategoryRepository.findById(restaurantCategoryId);
-        return restaurantCategory.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity test(String name) {
-        return ResponseEntity.ok(this.restaurantCategoryRepository.findByName(name));
+    public RestaurantCategory find(@PathVariable Long restaurantCategoryId) {
+        return this.restaurantCategoryService.findById(restaurantCategoryId);
     }
 
     @PostMapping
-    public ResponseEntity<RestaurantCategory> save(@RequestBody RestaurantCategory restaurantCategory) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.restaurantCategoryService.save(restaurantCategory));
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestaurantCategory save(@RequestBody RestaurantCategory restaurantCategory) {
+        return this.restaurantCategoryService.save(restaurantCategory);
     }
 
     @PutMapping("/{restaurantCategoryId}")
-    public ResponseEntity<RestaurantCategory> replace(@PathVariable Long restaurantCategoryId, @RequestBody RestaurantCategory restaurantCategory) {
-        Optional<RestaurantCategory> restaurantCategoryOptional = this.restaurantCategoryRepository.findById(restaurantCategoryId);
-        if (restaurantCategoryOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        RestaurantCategory persistedRestaurantCategory = restaurantCategoryOptional.get();
-        BeanUtils.copyProperties(restaurantCategory, persistedRestaurantCategory, "id");
-        return ResponseEntity.ok(this.restaurantCategoryService.save(persistedRestaurantCategory));
+    public RestaurantCategory replace(@PathVariable Long restaurantCategoryId, @RequestBody RestaurantCategory restaurantCategory) {
+        restaurantCategory.setId(restaurantCategoryId);
+        return this.restaurantCategoryService.replace(restaurantCategory);
     }
 
     @DeleteMapping("/{restaurantCategoryId}")
-    public ResponseEntity<Void> remove(@PathVariable Long restaurantCategoryId) {
-        try {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable Long restaurantCategoryId) {
             this.restaurantCategoryService.delete(restaurantCategoryId);
-            return ResponseEntity.noContent().build();
-        } catch (EntityInUseException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

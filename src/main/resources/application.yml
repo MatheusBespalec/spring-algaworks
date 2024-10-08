@@ -1,4 +1,8 @@
 spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-ignored-properties: true
   datasource:
     url: jdbc:mysql://127.0.0.1/jpa?createDatabaseIfNotExist=true&connectionTimeZone=UTC
     username: root

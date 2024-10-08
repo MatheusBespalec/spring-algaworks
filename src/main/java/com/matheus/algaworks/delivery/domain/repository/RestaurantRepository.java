@@ -18,4 +18,5 @@ public interface RestaurantRepository extends CustomJpaRepository<Restaurant, Lo
 //    @Query("from Restaurant where name like %:name% and restaurantCategory.id = :restaurantCategoryId")
     Optional<Restaurant> customSearch(String name, @Param("restaurantCategoryId") Long restaurantCategoryId);
     List<Restaurant> customQuery(String name, BigDecimal minFreightRate, BigDecimal maxFreightRate);
+    Boolean existsByAddressCityId(Long id);
 }
